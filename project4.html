@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Realization and Controlling Three Tanks Coupled System using Data-Driven Control</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif; /* Changed to Inter */
+            background-color: #f8f9fa; /* Light gray background */
+            color: #343a40; /* Dark text color */
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background-color: #ffffff; /* White header background */
+            padding: 20px 0;
+            border-bottom: 1px solid #e0e0e0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+            border-radius: 0.75rem; /* Rounded corners for header */
+        }
+
+        header h1 {
+            font-size: 2.5em; /* Larger heading */
+            color: #212529; /* Darker heading color */
+            font-weight: 700; /* Bold font weight */
+            margin: 0; /* Ensure no default margin */
+            text-align: center; /* Center align header text */
+        }
+
+        .detail {
+            background: #ffffff; /* White card background */
+            padding: 30px; /* More padding */
+            border-radius: 0.75rem; /* Rounded corners */
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Stronger shadow */
+            margin-bottom: 30px; /* More margin */
+        }
+
+        .project-description h2, .project-description h3 {
+            margin-bottom: 15px; /* More margin below headings */
+            text-align: center;
+            color: #2b6cb0; /* Highlight color for headings */
+            font-weight: 600;
+        }
+
+        .project-description h2 {
+            font-size: 2.2em; /* Slightly smaller than main title */
+        }
+
+        .project-description h3 {
+            font-size: 1.6em; /* Sub-heading size */
+        }
+
+        .project-description p {
+            text-align: justify;
+            margin-bottom: 25px; /* More space below paragraphs */
+            color: #495057; /* Slightly darker body text */
+            font-size: 1.05em;
+        }
+
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px; /* More space between feature tags */
+            margin-top: 20px;
+            margin-bottom: 30px;
+        }
+
+        .features div {
+            background-color: #e2e8f0; /* Light blue-gray for features */
+            color: #2d3748; /* Dark text for features */
+            padding: 10px 20px; /* More padding for features */
+            border-radius: 0.5rem; /* Rounded corners */
+            font-size: 0.95em;
+            font-weight: 500;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .features div:hover {
+            transform: translateY(-3px); /* Subtle hover effect */
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+            max-width: 100%;
+            background: #000;
+            margin-top: 25px;
+            border-radius: 0.75rem; /* Rounded corners for video */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 0.75rem; /* Ensure iframe also has rounded corners */
+        }
+
+        /* Image Scroll Styling - Adapted to match new design aesthetics */
+        .image-scroll {
+            display: flex;
+            overflow-x: auto;
+            gap: 15px;
+            padding: 15px;
+            background: #f0f4f8; /* Lighter background for image scroll */
+            border-radius: 0.75rem;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+            margin-top: 15px;
+            margin-bottom: 20px;
+            scroll-behavior: smooth;
+        }
+
+        .image-scroll img {
+            width: 250px; /* Increased width for better viewing */
+            height: 180px; /* Increased height */
+            object-fit: cover;
+            border-radius: 0.75rem; /* Rounded corners */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Stronger shadow */
+            flex-shrink: 0; /* Prevent shrinking */
+        }
+
+        .image-scroll img:hover {
+            transform: scale(1.03); /* Slight zoom on hover */
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+        }
+
+        /* Custom scrollbar for webkit browsers */
+        .image-scroll::-webkit-scrollbar {
+            height: 12px;
+        }
+
+        .image-scroll::-webkit-scrollbar-track {
+            background: #e2e8f0;
+            border-radius: 6px;
+        }
+
+        .image-scroll::-webkit-scrollbar-thumb {
+            background: #a0aec0;
+            border-radius: 6px;
+            border: 3px solid #e2e8f0; /* Padding around thumb */
+        }
+
+        .image-scroll::-webkit-scrollbar-thumb:hover {
+            background: #718096;
+        }
+
+        .download-link-box {
+            text-align: center;
+            margin-top: 30px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #f0f0f0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .download-link-box a {
+            display: inline-block;
+            background-color: #2b6cb0; /* Adjusted to match highlight color */
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .download-link-box a:hover {
+            background-color: #2c5282; /* Darker shade on hover */
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #6c757d; /* Gray text for footer */
+            font-size: 0.9em;
+            background-color: #f0f0f0; /* Light gray footer background */
+            border-top: 1px solid #e0e0e0;
+            border-radius: 0.75rem; /* Rounded corners for footer */
+            margin-top: 20px;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+            .project-description h2 {
+                font-size: 1.8em;
+            }
+            .project-description h3 {
+                font-size: 1.4em;
+            }
+            .detail {
+                padding: 20px;
+            }
+            .features {
+                gap: 10px;
+            }
+            .features div {
+                padding: 8px 15px;
+                font-size: 0.9em;
+            }
+            .image-scroll img {
+                width: 180px;
+                height: 135px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Realization and Controlling Three Tanks Coupled System using Data-Driven Control</h1>
+        </div>
+    </header>
+
+    <main>
+        <div class="container detail">
+            <div class="project-description">
+                <h2>Project Description</h2>
+                <p>This project focuses on the realization and control of a complex three-tank coupled system, utilizing advanced data-driven control techniques. The primary objective is to accurately regulate the water levels within the interconnected tanks by processing real-time data and implementing sophisticated control strategies. This involves modeling the system as a Multi-Input Multi-Output (MIMO) system and applying various control methodologies to achieve precise and robust level control, even under disturbances.</p>
+
+                <h3>Key Technologies & Tools:</h3>
+                <div class="features">
+                    <div>MIMO System Modeling</div>
+                    <div>Data-Driven Controller Design</div>
+                    <div>Linear-Quadratic Regulator (LQR)</div>
+                    <div>Proportional-Integral (PI) Control</div>
+                    <div>LabVIEW for Realization</div>
+                    <div>NI myRIO 1900 Hardware</div>
+                    <div>MATLAB Simulink for Simulation</div>
+                    <div>Linear Matrix Inequalities (LMI)</div>
+                </div>
+
+                <h2>Project Results & Implementations:</h2>
+
+                <h3>LabVIEW Implementation:</h3>
+                <p>Visualizing the control interface and real-time data acquisition through LabVIEW.</p>
+                <div class="image-scroll">
+                    <img src="img/Lqr_sr.png" alt="LabVIEW Image 1">
+                    <img src="img/LQR_S_R.png" alt="LabVIEW Image 2">
+                </div>
+
+                <h3>Data-Driven LQR Performance:</h3>
+                <p>Demonstrating the effectiveness of LQR control designed using data-driven methods, including response to perturbations.</p>
+                <div class="image-scroll">
+                    <img src="img/lqr_data_driven.jpg" alt="Data-Driven LQR Image 1">
+                    <img src="img/lqr_data_driven_perturbation.jpg" alt="Data-Driven LQR Image 2">
+                </div>
+
+                <h3>Data-Driven LMI Controller Results:</h3>
+                <p>Results from controllers designed using Linear Matrix Inequalities with a data-driven approach, showing robust performance.</p>
+                <div class="image-scroll">
+                    <img src="img/lmi_data_driven.jpg" alt="Data-Driven LMI Image 1">
+                    <img src="img/lmi_perturbation.jpg" alt="Data-Driven LMI Image 2">
+                </div>
+
+                <h3>Standard LQR Implementation:</h3>
+                <p>Comparison of a classic LQR controller's performance against data-driven methods.</p>
+                <div class="image-scroll">
+                    <img src="img/lqr_normal_K_belarbi.jpg" alt="LQR Image 1">
+                    <img src="img/lqr_normal_K_belarbi_perturbation.jpg" alt="LQR Image 2">
+                </div>
+
+                <h3>LQR with Integrator Performance:</h3>
+                <p>Analysis of LQR control enhanced with an integrator for improved steady-state error rejection.</p>
+                <div class="image-scroll">
+                    <img src="img/lqr_integrator.jpg" alt="LQR with Integrator Image 1">
+                    <img src="img/lqr_I_perturbation.jpg" alt="LQR with Integrator Image 2">
+                </div>
+
+                <h3>PI Controller Performance:</h3>
+                <p>Illustrating the behavior of a Proportional-Integral (PI) controller for the system.</p>
+                <div class="image-scroll">
+                    <img src="img/pi_pert.jpg" alt="PI Image 1">
+                    <img src="img/pi_pert.jpg" alt="PI Image 2">
+                </div>
+
+                <h3>Watch the Demo:</h3>
+                <div class="video-container">
+                    <iframe
+                        src="https://www.youtube.com/embed/A0usz6a-6rI"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+                 
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>Created by Benleulmi Ahmed</p>
+        </div>
+    </footer>
+</body>
+</html>

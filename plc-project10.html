@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PLC Pump Control: HOA, Alarms & Cycle Logic</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .detail {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .project-description h2, .project-description h3 {
+            margin-bottom: 10px;
+            text-align: center; /* Center align headings */
+        }
+
+        .project-description p {
+            text-align: justify; /* Justify paragraph text */
+            margin-bottom: 20px;
+        }
+
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center; /* Center align features */
+            gap: 10px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+
+        .features div {
+            background-color: #e0e0e0;
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-size: 0.9em;
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+            max-width: 100%;
+            background: #000;
+            margin-top: 20px;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .download-link-box {
+            text-align: center;
+            margin-top: 30px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #f0f0f0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .download-link-box a {
+            display: inline-block;
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .download-link-box a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container" style="text-align: center;">
+            <h1>PLC Pump Control: HOA, Alarms & Cycle Logic (RSLogix 500)</h1>
+        </div>
+    </header>
+
+    <main>
+        <div class="container detail">
+            <div class="project-description">
+                <h2>Project Description</h2>
+                <p>
+                    Master complex pump automation with this RSLogix 500, RSLinx, and Emulate 500 project! 
+                    In this detailed walkthrough, we'll program a cycling pump system that runs for 30 seconds 
+                    and stops for 10 seconds continuously. The project incorporates essential HOA (Hand-Off-Auto) 
+                    controls, allowing for manual pump operation, automatic cycling, and a 'Hand' mode that 
+                    overrides the automatic cycle only while pressed. Crucially, we've integrated robust alarm logic 
+                    to protect the pump. The pump and its cycle will terminate if no flow is detected within 5 seconds 
+                    of starting (to prevent cavitation) or if pressure ever exceeds 30 psi for 5 seconds (to protect 
+                    downstream devices). Fault indicators will alert the user to any problems, and we'll demonstrate 
+                    alarm silence and reset capabilities.
+                </p>
+                
+                <h3>Key Technologies & Features:</h3>
+                <div class="features">
+                    <div>Allen-Bradley RSLogix 500</div>
+                    <div>RSLinx Classic</div>
+                    <div>RSLogix Emulate 500</div>
+                    <div>HOA Control Logic</div>
+                    <div>Alarm Management</div>
+                    <div>Pump Cycling Logic</div>
+                    <div>Fault Indication</div>
+                </div>
+
+                <h3>Watch the Demo:</h3>
+                <div class="video-container">
+                    <iframe 
+                        src="https://www.youtube.com/embed/rTYVFNJJEk8?si=MjnfncOzEhAvCm3D" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+
+                <div class="download-link-box">
+                    <h3>Download Project Specifications:</h3>
+                    <a href=https://drive.google.com/file/d/1gpPsgv_P4KLUhY6j-j0VbEZRv3N4JeOw/view?usp=drive_link download>Download Project PDF</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>Created by Benleulmi Ahmed</p> </div>
+    </footer>
+</body>
+</html>
